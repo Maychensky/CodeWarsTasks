@@ -1,9 +1,4 @@
-﻿using System.ComponentModel;
-using System.Diagnostics.SymbolStore;
-using System.Dynamic;
-using System.Linq;
-
-namespace CodeWarsTasks
+﻿namespace CodeWarsTasks
 {
     // kata https://www.codewars.com/kata/51e056fe544cf36c410000fb/train/csharp
     public class TopWords
@@ -11,9 +6,6 @@ namespace CodeWarsTasks
         public static List<string> Top3(string s)
         {
             s = s.ToLower();
-            Console.Write(">>>>");
-            Console.Write(s);
-            Console.WriteLine("<<<<");
             Dictionary<string, int> countWords = new Dictionary<string, int>();
             CountNumberRepetitionsWords(ref countWords, s);
             List<string> topWords = new List<string>();
@@ -61,8 +53,17 @@ namespace CodeWarsTasks
 
         private static void AddNewWord(ref Dictionary<string, int> countWords, string newWord)
         {
+            if (!CheckCorrectWord(newWord)) return;
             if (countWords.ContainsKey(newWord)) countWords[newWord]++;
             else countWords.Add(newWord, 1);
+        }
+
+        private static bool CheckCorrectWord(string word)
+        {
+            foreach (var currentLetterWord in word)
+                if (char.IsLetter(currentLetterWord))
+                    return true;
+            return false;
         }
     }
 }

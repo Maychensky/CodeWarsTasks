@@ -1,3 +1,5 @@
 ﻿using CodeWarsTasks;
-var testStr1 = "  '  ";
-TopWords.Top3(testStr1);
+
+Generator generator = new Generator();
+var test = generator.createQrCode("Hi");
+Console.WriteLine();
