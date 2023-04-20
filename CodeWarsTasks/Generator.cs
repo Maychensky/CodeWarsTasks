@@ -9,7 +9,7 @@ namespace CodeWarsTasks
         {
             StringBuilder bitsSBFormat = new StringBuilder();
             string qrCodeBinaryFormat = GetQrCodeBinaryFormat(ref bitsSBFormat, text);
-            var errorCorrectionNumbers = GetErrorCorrectionNumbers(qrCodeBinaryFormat); // 250 255 60 175 138 205 169 12 87 238 222 39 87 58 213 84 70
+            var errorCorrectionNumbers = GetErrorCorrectionNumbers(qrCodeBinaryFormat);
             AddErrorCorrectionNumbers(ref bitsSBFormat, errorCorrectionNumbers);
             QRCode qRCode = new QRCode(bitsSBFormat.ToString());
             return qRCode.GetQRCode();
@@ -163,23 +163,6 @@ namespace CodeWarsTasks
                     leftPolynomial[i].XORByNumericalMultiplier(rightPolynomial[i]);
                 }
             }
-        }
-
-        public void Print(string nameOperation)
-        {
-            Console.WriteLine("-------------------------------------------------------START--------------------------------------------");
-            Console.WriteLine(nameOperation);
-            Console.WriteLine("--------------------------------------------------------------------------------------------------------");
-            Console.WriteLine("полином сообщения: ");
-            foreach (var e in _massagePolynomial)
-                Console.Write("a^{0}({1}) * x^{2}  +  ", e.multiplierVariableWithDegree, e.numericalMultiplier ,e.degreeVariable);
-            Console.WriteLine();
-            Console.WriteLine("полином генератор: ");
-            foreach (var e in _generatorPolynomial)
-                Console.Write("a^{0}({1}) * x^{2}  +  ", e.multiplierVariableWithDegree, e.numericalMultiplier, e.degreeVariable);
-            Console.WriteLine();
-            Console.WriteLine("-------------------------------------------------------END----------------------------------------------");
-            Console.Write("\n\n\n\n");
         }
 
         private void ResetPolynomials(List<MemberPolynomial> changePolynomials)
@@ -778,7 +761,6 @@ namespace CodeWarsTasks
                 return;
             }
             multiplierVariableWithDegree += degree;
-            var a = 10;     // TODO
         } 
         public void XORByNumericalMultiplier(MemberPolynomial otherMemberPolynomial) => numericalMultiplier ^= otherMemberPolynomial.numericalMultiplier;
         public bool IsZero() => _multiplierVariableWithDegree == 0 && _numericalMultiplier == 0;
@@ -801,6 +783,7 @@ namespace CodeWarsTasks
                 {DirectionVertical.Down, 1},
             };
         }
+
         public QRCode(string bits)
         {
             _bits = bits;
@@ -829,6 +812,7 @@ namespace CodeWarsTasks
                 new int[]{1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
             };
         }
+
         public int[][] GetQRCode() => GetQRCode(_bits);
         public int[][] GetQRCode(string bits)
         {
@@ -855,20 +839,18 @@ namespace CodeWarsTasks
             int startPositionX = (int)startPosition.X;
             int startPositionY = (int)startPosition.Y;
             int endPositionY = startPositionY + (directionValue * sizeVertical);
-            for (int y = startPositionY; y < endPositionY; y += directionValue)
+            for (int y = startPositionY; y != endPositionY; y += directionValue)
             {
                 InitElementWithMask(startPositionX, y, startIndexBits++);
                 InitElementWithMask(startPositionX - 1, y, startIndexBits++);
             }
-            Console.WriteLine();
             return startIndexBits;
         }
 
         private void InitElementWithMask(int x, int y, int indexBits)
         {
             int bit = (int)char.GetNumericValue(_bits[indexBits]);
-            _QRCodeArrayFormat[x][y] = ((x + y) % 2 == 0) ? ReversBits(bit) : bit;
-            Console.Write("({0},{1}) ", x, y);
+            _QRCodeArrayFormat[y][x] = ((x + y) % 2 == 0) ? ReversBits(bit) : bit;
         }
 
         private int ReversBits(int value) => (value == 0) ? 1 : 0;

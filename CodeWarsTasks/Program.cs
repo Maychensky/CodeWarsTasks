@@ -1,5 +1,4 @@
 ﻿using CodeWarsTasks;
 
-Generator generator = new Generator();
-var test = generator.createQrCode("Hi");
-Console.WriteLine();
+Console.WriteLine(TCP.TraverseStates(new[] { "APP_ACTIVE_OPEN", "RCV_SYN_ACK", "RCV_FIN" }));
+
