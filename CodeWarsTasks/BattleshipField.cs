@@ -62,7 +62,7 @@
         {
             _countsShips.Clear();
             _checkField = new bool[SIZE_FIELD, SIZE_FIELD];
-        }
+        }   
 
         private static int GetSizeShip(int x, int y)
         {
