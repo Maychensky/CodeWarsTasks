@@ -1,14 +1,7 @@
 ﻿using CodeWarsTasks;
-using System.Data;
 
-var testStr = "WECRLTEERDSOEEFEAOCAIVDEN";
-var n = 5;
-
-var result = RailFenceCipher.Decode(testStr, n);
-var tryStr = "WLSADOOTEEECEAEECRFINVEDR";
-
-
+var str = "-195595/564071";
+var result = Kata001.MixedFraction(str);
 Console.WriteLine(result);
-Console.WriteLine(result.Equals(tryStr));
 
 
