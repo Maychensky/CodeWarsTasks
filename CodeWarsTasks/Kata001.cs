@@ -1,13 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.Design;
-using System.Dynamic;
-using System.Linq;
-using System.Numerics;
-using System.Runtime.Serialization.Formatters;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Numerics;
 
 namespace CodeWarsTasks
 {
@@ -35,7 +26,7 @@ namespace CodeWarsTasks
                 space = " ";
             }
             if (numerator != 0) result += string.Format("{0}{1}/{2}", space, numerator, denominator);
-            return result.Equals(string.Empty) ? "0" : result;
+            return result.Equals(string.Empty) || result.Equals("-") ? "0" : result;
         }
 
         private static void LoadToIrreducibleProperFraction(ref (BigInteger, BigInteger) properFraction)
@@ -73,12 +64,8 @@ namespace CodeWarsTasks
         }
     }
 
-    public static class ExtentedIntenger
+    public static class ExtendedInteger
     {
-        public static bool IsNegative(this BigInteger value)
-        {
-            var e = value < 0;
-            return (value < 0);
-        }
+        public static bool IsNegative(this BigInteger value) => (value < 0);
     }
 }
